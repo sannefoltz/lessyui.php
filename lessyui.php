@@ -18,23 +18,21 @@ else{
 }
 ob_end_flush();
 
-
 function outputbuffer($buffer){	
 	global $filename;
-  $yuicss = new Minify_YUI_CssCompressor();
-  $buffer = $yuicss->compress($buffer);
-  
+	$yuicss = new Minify_YUI_CssCompressor();
+	$buffer = $yuicss->compress($buffer);
+
 	header('Content-type: text/css');
 	header('Content-length:'.strlen($buffer));
-	
+
 	//cacheble
 	$gmt_mtime = gmdate('D, d M Y H:i:s', filemtime($filename) ) . ' GMT';
 	header("Cache-Control: max-age=3600, must-revalidate"); // HTTP/1.1
 	header("Last-Modified: " . $gmt_mtime );
-	//   
+
 	return $buffer;	
 }
-
 
 
 /**
